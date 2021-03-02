@@ -3,7 +3,6 @@ using System;
 using Exiled.API.Features;
 using Exiled.Permissions.Extensions;
 using scp035.API;
-using SCP999X.API;
 
 namespace SCP008X
 {
@@ -11,7 +10,7 @@ namespace SCP008X
     public class Infect : ICommand
     {
         private static Player Pull035() => Scp035Data.GetScp035();
-        private static Player Pull999() => SCP999API.GetScp999();
+        //private static Player Pull999() => SCP999API.GetScp999();
         public string Command { get; } = "infect";
 
         public string[] Aliases { get; } = null;
@@ -54,18 +53,6 @@ namespace SCP008X
             catch (Exception)
             {
                 Log.Debug($"SCP-035, by Cyanox, is not installed. Skipping check.", Scp008X.Instance.Config.DebugMode);
-            }
-            try
-            {
-                if (ply.UserId == Pull999().UserId)
-                {
-                    response = "You can not infect SCP-999 hosts.";
-                    return false;
-                }
-            }
-            catch (Exception)
-            {
-                Log.Debug($"SCP-999-X, by DGvagabond, is not installed. Skipping check.", Scp008X.Instance.Config.DebugMode);
             }
             if (ply.ReferenceHub.TryGetComponent(out Scp008 s008))
             {

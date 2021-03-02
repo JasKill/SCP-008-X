@@ -4,7 +4,6 @@ using Exiled.Events.EventArgs;
 using System.Linq;
 using Exiled.API.Features;
 using scp035.API;
-using SCP999X.API;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -25,7 +24,7 @@ namespace SCP008X
         public static List<Player> Victims = new List<Player>();
         private static bool IsSH { get; set; }
         private static User TryGet035() => Scp035Data.GetScp035();
-        private static User TryGet999() => SCP999API.GetScp999();
+        //private static User TryGet999() => SCP999API.GetScp999();
         public void OnRoundStart()
         {
             if (Scp008X.Instance.Config.CassieAnnounce && Scp008X.Instance.Config.Announcement != null)
@@ -262,6 +261,11 @@ namespace SCP008X
         }
         public static void Infect(User target)
         {
+            if (target == null)
+            {
+                return;
+            }
+            
             if (target.Role == RoleType.Tutorial) return;
             try
             {
@@ -270,14 +274,6 @@ namespace SCP008X
             catch (Exception)
             {
                 Log.Debug($"SCP-035, by Cyanox, is not installed. Skipping method call.", Scp008X.Instance.Config.DebugMode);
-            }
-            try
-            {
-                if (target.UserId == TryGet999().UserId) return;
-            }
-            catch(Exception)
-            {
-                Log.Debug($"SCP-999-X, by DGvagabond, is not installed. Skipping method call.", Scp008X.Instance.Config.DebugMode);
             }
             if (target.ReferenceHub.gameObject.TryGetComponent(out Scp008 scp008)) { return; }
             target.ReferenceHub.gameObject.AddComponent<Scp008>();
